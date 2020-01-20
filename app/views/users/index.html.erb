@@ -1,0 +1,10 @@
+<%# <p><%= User.each do |user|%> 
+
+<p>Welcome to Users Home Page</p>
+
+<%= link_to 'SignUp', signup_path %>
+<%= link_to 'SignIn', login_path %>
+<%= puts @current_user %>
+<% if @current_user %>
+  <%= link_to 'Logout', logout_path %>
+<% end %>
