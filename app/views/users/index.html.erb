@@ -1,10 +1,17 @@
-<%# <p><%= User.each do |user|%> 
+<% flash.each do |type, msg| %>
+  <div>
+    <%= msg %>
+  </div>
+<% end %>
 
-<p>Welcome to Users Home Page</p>
+<p>Welcome to Online Shop</p>
 
-<%= link_to 'SignUp', signup_path %>
-<%= link_to 'SignIn', login_path %>
-<%= puts @current_user %>
-<% if @current_user %>
+<% unless current_user %> 
+  <%= link_to 'SignUp', signup_path %>
+  <%= link_to 'SignIn', login_path %>
+<% end %>
+
+<% if current_user %> 
+  <%= current_user.email %> logged in!
   <%= link_to 'Logout', logout_path %>
 <% end %>
