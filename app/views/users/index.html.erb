@@ -5,13 +5,12 @@
 <% end %>
 
 <p>Welcome to Online Shop</p>
-
-<% unless current_user %> 
+<% unless @current_user %> 
   <%= link_to 'SignUp', signup_path %>
   <%= link_to 'SignIn', login_path %>
 <% end %>
 
-<% if current_user %> 
-  <%= current_user.email %> logged in!
+<% if @current_user %> 
+  <%= @current_user.email %> logged in!
   <%= link_to 'Logout', logout_path %>
 <% end %>

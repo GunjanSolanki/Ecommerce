@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def create
     @user = User.create(user_params)
-    if @user.save
+    if @user
       redirect_to login_path, info: "Signed up successful!"
     else
       render "new"
