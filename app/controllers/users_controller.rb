@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  skip_before_action :authenticated
+
   def index
   end
   
@@ -7,9 +9,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.create(user_params)
-    if @user
-      redirect_to login_path, info: "Signed up successful!"
+    @user = User.new(user_params)
+    if @user.save
+      redirect_to login_path, info: "Signed up successfully!"
     else
       render "new"
     end
