@@ -21,8 +21,15 @@
     <td><%= Category.find(@product.category_id).name %></td>
   </tr>
 </table>
-<% current_user %>
-<% if @current_user.is_admin %>
-  <td><%= link_to 'Edit', edit_product_path(@product) %></td>
+
+<% if !current_user.is_admin && current_cart %>
+  <% unless ShoppingCartProduct.find_by(shopping_cart_id: current_cart.id, product_id: @product.id) %>
+    <%= link_to 'Add to Cart', add_to_cart_path(@product.id) %>
+  <% else %>
+    <p>Product is already in the cart!</p>
+  <% end %>
+<% else %>
+  <%= link_to 'Edit', edit_product_path(@product) %>
 <% end %>
+
 <%= link_to 'Back', products_path %>

@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  has_one :shopping_cart
+  has_one :shopping_cart, dependent: :destroy
   has_many :orders
 
   validates :name, presence: true, length: { maximum: 10 } 
@@ -9,5 +9,12 @@ class User < ApplicationRecord
 
   enum gender: [:male, :female]
   has_secure_password
+
+  after_save :create_shopping_cart
+
+  def create_shopping_cart
+    @shopping_cart = ShoppingCart.create(user_id: self.id)
+  end
+
 end
 

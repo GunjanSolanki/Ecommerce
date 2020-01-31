@@ -5,6 +5,8 @@ class Product < ApplicationRecord
   has_many :orders, through: :order_products
   belongs_to :category
 
+  scope :most_recent, -> { order(created_at: :desc) }
+
   validates :description, length: { maximum: 500 }
   validates :price, :quantity, presence: true, numericality: true
   has_many_attached :images, dependent: :destroy

@@ -2,13 +2,13 @@ class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
   
   def index
-    @products = Product.all
+    @products = Product.all.most_recent
   end
 
   def new
     @product = Product.new
   end
-  
+
   def create
     @product = Product.new(product_params)
     if @product.save

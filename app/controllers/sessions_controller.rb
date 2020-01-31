@@ -1,7 +1,7 @@
 class SessionsController < ApplicationController
   skip_before_action :authenticated, only: [:new, :create]
   include SessionsHelper, Authenticable
-  before_action :set_user, only: [:create]
+  before_action :set_user, :set_shopping_cart, only: [:create]
 
   def new
   end
@@ -24,4 +24,9 @@ class SessionsController < ApplicationController
   def set_user
     @user = User.find_by(email: params.dig(:session, :email))
   end
+
+  def set_shopping_cart
+    @shopping_cart = ShoppingCart.find_by(user_id: @user.id) if @user
+  end
+  
 end

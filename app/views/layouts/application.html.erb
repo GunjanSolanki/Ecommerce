@@ -11,8 +11,14 @@
 
   <body>
     <% if current_user %> 
-      <%= @current_user.email %> logged in!
+      <%= @current_user.email %> Logged in!
+      <% if current_cart && !@current_user.is_admin %>
+        Cart ID : <%= @current_cart.id %>
+      <% end %>
       <%= link_to 'Logout', logout_path, method: :delete %>
+    <% end %>
+    <% if @current_user && current_cart %>
+      <%= link_to 'Cart', shopping_carts_path %>
     <% end %>
     <%= yield %>
   </body>
