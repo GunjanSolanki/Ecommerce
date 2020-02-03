@@ -1,0 +1,43 @@
+
+<%= form_for @product  do |form| %>
+  <% if @product.errors.any? %>
+    <h2>
+      <%= pluralize(@product.errors.count, "error") %> prohibited
+      from creating the product!:
+    </h2>
+    <ul>
+      <% @product.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+    </ul>
+  <% end %>
+  <p>
+    <%= form.label :description %><br>
+    <%= form.text_area :description %>
+  </p>
+
+  <p>
+    <%= form.label :price %><br>
+    <%= form.number_field :price %>
+  </p>
+
+  <p>
+    <%= form.label :quantity %><br>
+    <%= form.number_field :quantity %>
+  </p>
+
+  <p>
+    <%= form.label :category_name %><br>
+    <%= form.collection_select :category_id, Category.all, :id, :name %>
+  </p>
+
+  <p>
+    <%= form.label :images %><br>
+    <%= form.file_field :images, multiple: true %>
+  </p>
+
+  <p>
+    <%= form.submit ( @product.new_record? ? :ADDPRODUCT : :EDITPRODUCT ) %><br>
+  </p>
+<% end %>
+  
