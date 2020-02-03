@@ -5,4 +5,5 @@ class ShoppingCart < ApplicationRecord
   has_many :shopping_cart_products, dependent: :destroy
   has_many :products, through: :shopping_cart_products
   
+  scope :most_recent, -> { order(id: :desc) }
 end

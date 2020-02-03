@@ -14,9 +14,8 @@
       <td><%= product.description %></td>
       <td><%= product.price %></td>
       <td><%= product.quantity %></td>
-      <td><%= Category.find(product.category_id).name %></td>
-      <% current_user %>
-      <% unless @current_user.is_admin %>
+      <td><%= product.category.name %></td>
+      <% unless current_user.is_admin %>
         <td><%= link_to 'Show', product_path(product) %></td>
       <% else %>
         <td><%= link_to 'Show', product_path(product) %></td>

@@ -1,5 +1,6 @@
 <h1>Shopping Cart</h1>
 
+<% unless @products_in_cart.empty? %>
 <table>
   <tr>
     <th>Product Desciption</th>
@@ -7,16 +8,17 @@
     <th>Product Quantity</th>
     <th>Product Category</th>
   </tr>
-  <% if current_cart %>
-    <% @current_cart.products.each do |product| %>
-      <tr>
-        <td><%= product.description %></td>
-        <td><%= product.price %></td>
-        <td><%= product.quantity %></td>
-        <td><%= Category.find(product.category_id).name %></td>
-        <td><%= link_to 'Remove from Cart', remove_from_cart_path(product.id), method: :delete %></td>
-      </tr>
+  <tr>
+    <% @products_in_cart.each do |product| %>
+      <td><%= product.description %></td>
+      <td><%= product.price %></td>
+      <td><%= product.quantity %></td>
+      <td><%= product.category.name %></td>
+      <td><%= link_to 'Remove from Cart', remove_from_cart_path(product.id), method: :delete %></td>
     <% end %>
+  <% else %>
+    <p>Cart is empty!</p>
   <% end %>
+  </tr>
 </table>
 <%= link_to 'Back', products_path %>

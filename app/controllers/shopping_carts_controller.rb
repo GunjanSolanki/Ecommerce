@@ -1,8 +1,9 @@
 class ShoppingCartsController < ApplicationController
-  include ShoppingCartsHelper, Cart
-  before_action :set_cart_session
-  
+  include ShoppingCartsHelper
+  before_action :set_cart
+
   def index
+    @products_in_cart = current_cart.products.most_recent
   end
 
   def add_to_cart
@@ -14,10 +15,8 @@ class ShoppingCartsController < ApplicationController
   end
 
   private
-  def set_cart_session
-    unless session[:shopping_cart_id]
-      session[:shopping_cart_id] = current_user.id
-    end
-  end
 
+  def set_cart
+    @cart = ShoppingCart.find_by(user_id: current_user.id)
+  end
 end
