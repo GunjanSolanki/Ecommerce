@@ -1,0 +1,28 @@
+<h1>Product <%= @product.id %></h1>
+
+<% if @product.images.attached? %>
+  <p><strong>Images : </strong></p><br>
+  <% @product.images.each do |image| %>
+    <%= image_tag(image) %>
+  <% end %>
+<% end %>
+
+<table>
+  <tr>
+    <th>Product Desciption</th>
+    <th>Product Price</th>
+    <th>Product Quantity</th>
+    <th>Product Category</th>
+  </tr>
+  <tr>
+    <td><%= @product.description %></td>
+    <td><%= @product.price %></td>
+    <td><%= @product.quantity %></td>
+    <td><%= Category.find(@product.category_id).name %></td>
+  </tr>
+</table>
+<% current_user %>
+<% if @current_user.is_admin %>
+  <td><%= link_to 'Edit', edit_product_path(@product) %></td>
+<% end %>
+<%= link_to 'Back', products_path %>

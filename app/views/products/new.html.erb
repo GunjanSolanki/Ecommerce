@@ -1,39 +1,7 @@
 
-<h1>Add Products</h1>
-<%= form_with url: products_path, scope: :product, local: true do |form| %>
-   <% if @product.errors.any? %>
-      <h2>
-        <%= pluralize(@product.errors.count, "error") %> prohibited
-        from creating the product!:
-      </h2>
-      <ul>
-        <% @product.errors.full_messages.each do |msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    <% end %>
-  <p>
-    <%= form.label :description %><br>
-    <%= form.text_area :description %>
-  </p>
+<h1>Add Product</h1>
 
-  <p>
-    <%= form.label :price %><br>
-    <%= form.number_field :price %>
-  </p>
+<%= render 'form' %>
 
-  <p>
-    <%= form.label :quantity %><br>
-    <%= form.number_field :quantity %>
-  </p>
+<%= link_to 'Back', products_path %>
 
-  <p>
-    <%= form.label :category_name %><br>
-    <%= form.collection_select :category_id, Category.all, :id, :name %>
-  </p>
-
-  <p>
-    <%= form.submit :AddProduct %><br>
-  </p>
-  
-<% end %>

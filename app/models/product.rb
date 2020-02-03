@@ -7,5 +7,5 @@ class Product < ApplicationRecord
 
   validates :description, length: { maximum: 500 }
   validates :price, :quantity, presence: true, numericality: true
-
+  has_many_attached :images, dependent: :destroy
 end
