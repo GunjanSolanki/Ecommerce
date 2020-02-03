@@ -1,18 +1,27 @@
 class SessionsController < ApplicationController
+  skip_before_action :authenticated, only: [:new, :create]
+  include SessionsHelper, Authenticable
+  before_action :set_user, only: [:create]
+
   def new
   end
 
   def create
-    binding.pry
-    user = User.find_by(email: params[:email], password: params[:password])
-    if user && user.authenticate
-      session[:user_id] = user.id
+    if @user && @user.authenticate(params.dig(:session, :password))
+      login
+      redirect_to root_path, info: "Logged in successfully!"
     else
-      redirect_to root_path
+      flash[:warning] = "Invalid Email or Password!"
+      render "new"
     end
   end
 
   def destroy
-    session[:user_id] = nil
+    logout
+  end
+
+  private
+  def set_user
+    @user = User.find_by(email: params.dig(:session, :email))
   end
 end
