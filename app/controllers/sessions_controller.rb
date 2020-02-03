@@ -9,11 +9,7 @@ class SessionsController < ApplicationController
   def create
     if @user && @user.authenticate(params.dig(:session, :password))
       login
-      if @user.is_admin
-        redirect_to admin_products_path
-      else
-        redirect_to products_path
-      end
+      @user.is_admin ? (redirect_to admin_products_path) : (redirect_to products_path)
     else
       flash[:warning] = "Invalid Email or Password!"
       render "new"
