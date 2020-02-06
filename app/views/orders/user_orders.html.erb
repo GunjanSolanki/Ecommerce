@@ -1,0 +1,9 @@
+<h1>Orders made till date..</h1>
+  <table>
+    <%= render "products/product_heading" %>
+  <% @orders.each do |order| %>
+    <%= render "orders", { order: order } %>
+    <tr><td>Order ID : <%= order.id %></tr></td>
+    <tr><td><br></td></tr>
+  <% end %>
+  </table>

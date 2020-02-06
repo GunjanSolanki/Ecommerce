@@ -8,12 +8,7 @@
 <% end %>
 
 <table>
-  <tr>
-    <th>Product Desciption</th>
-    <th>Product Price</th>
-    <th>Product Quantity</th>
-    <th>Product Category</th>
-  </tr>
+  <%= render "product_heading" %>
   <tr>
     <td><%= @product.description %></td>
     <td><%= @product.price %></td>
@@ -23,8 +18,8 @@
 </table>
 
 <% if !current_user.is_admin && current_cart %>
-  <% unless ShoppingCartProduct.find_by(shopping_cart_id: current_cart.id, product_id: @product.id) %>
-    <%= link_to 'Add to Cart', add_to_cart_path(@product.id) %>
+  <% unless check_product_in_cart %>
+    <%= link_to 'Add to Cart', add_to_shopping_cart_path( { product_id: @product.id } ) %>
   <% else %>
     <p>Product is already in the cart!</p>
   <% end %>

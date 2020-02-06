@@ -17,9 +17,19 @@
       <% end %>
       <%= link_to 'Logout', logout_path, method: :delete %>
     <% end %>
+
     <% if @current_user && current_cart %>
       <%= link_to 'Products', products_path %>
       <%= link_to 'Cart', shopping_carts_path %>
+      <% unless @current_user.orders.empty? %>
+        <%= link_to 'My Orders', user_orders_path(@current_user.id) %>
+      <% end %>
+    <% end %>
+
+    <% if current_user && current_user.is_admin %>
+      <%= link_to 'Products', admin_products_path %>
+      <%= link_to 'Pending Orders', admin_pending_order_path %>
+      <%= link_to 'Order History', admin_orders_path %>
     <% end %>
     <%= yield %>
   </body>

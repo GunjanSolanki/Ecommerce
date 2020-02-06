@@ -1,0 +1,10 @@
+
+<% order.products.each do |product| %>
+  <tr>
+    <td><%= product.description %></td>
+    <td><%= product.price %></td>
+    <td><%= product.quantity %></td>
+    <td><%= product.category.name %></td>
+    <td><%= order.order_status %></td>
+  </tr>
+<% end %>

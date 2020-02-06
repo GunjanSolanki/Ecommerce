@@ -11,6 +11,8 @@ gem 'sqlite3', '~> 1.4'
 gem 'puma', '~> 4.1'
 # Use pg
 gem 'pg'
+gem 'pry'
+gem 'hirb'
 # Use by-crypt to encrypt passwords
 gem 'bcrypt', '~> 3.1'
 # Use SCSS for stylesheets

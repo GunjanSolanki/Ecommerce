@@ -1,24 +1,25 @@
 <h1>Shopping Cart</h1>
 
 <% unless @products_in_cart.empty? %>
-<table>
-  <tr>
-    <th>Product Desciption</th>
-    <th>Product Price</th>
-    <th>Product Quantity</th>
-    <th>Product Category</th>
-  </tr>
-  <tr>
-    <% @products_in_cart.each do |product| %>
-      <td><%= product.description %></td>
-      <td><%= product.price %></td>
-      <td><%= product.quantity %></td>
-      <td><%= product.category.name %></td>
-      <td><%= link_to 'Remove from Cart', remove_from_cart_path(product.id), method: :delete %></td>
+  <table>
+    <%= render "products/product_heading" %>
+    <% if current_cart %>
+      <% @products_in_cart.each do |product| %>
+        <tr>
+          <td><%= product.description %></td>
+          <td><%= product.price %></td>
+          <td><%= product.quantity %></td>
+          <td><%= product.category.name %></td>
+          <td><%= link_to 'Remove from Cart', remove_from_shopping_cart_path( { id: current_cart.id, product_id: product.id } ), method: :delete %></td>
+        </tr>
+      <% end %>
+      <% unless @current_cart.products.empty? %>
+        <tr><td><%= link_to 'Checkout', orders_path, method: :post %> </td></tr>
+      <% end %>
     <% end %>
-  <% else %>
-    <p>Cart is empty!</p>
-  <% end %>
-  </tr>
-</table>
+  </table>
+<% else %>
+  <p>Cart is Empty! </p>
+<% end %>
+
 <%= link_to 'Back', products_path %>

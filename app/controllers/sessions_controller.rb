@@ -26,7 +26,9 @@ class SessionsController < ApplicationController
   end
 
   def set_shopping_cart
-    @shopping_cart = ShoppingCart.find_by(user_id: @user.id) if @user
+    if @user
+      @shopping_cart = ShoppingCart.find_by(user_id: @user.id) unless @user.is_admin
+    end
   end
   
 end
