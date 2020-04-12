@@ -15,6 +15,12 @@ gem 'pry'
 gem 'hirb'
 # Use by-crypt to encrypt passwords
 gem 'bcrypt', '~> 3.1'
+# Use devise
+gem 'devise'
+# User onmni-auth
+gem 'omniauth-google-oauth2', '~> 0.4.1'
+# google api
+gem 'google-api-client', '~> 0.13.6'
 # Use SCSS for stylesheets
 gem 'sass-rails', '>= 6'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker

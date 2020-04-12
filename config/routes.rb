@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get 'home/index'
+  devise_for :users, :controllers => { registrations: 'registrations',
+    omniauth_callbacks: "users/omniauth_callbacks" }
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  resources :users, :sessions, only: [:create]
   resources :products
   resources :orders, only: [:index, :create, :show, :destroy]
   resources :shopping_carts, only: [:index] do
@@ -10,7 +12,7 @@ Rails.application.routes.draw do
     end
   end
 
-  root 'users#index'
+  root to: 'home#index'
 
   get 'user/:id/orders', to: 'orders#show_user_orders', as: 'user_orders'
   
@@ -21,7 +23,9 @@ Rails.application.routes.draw do
     get 'confirm_order/:id', to: 'orders#confirm_order', as: 'admin_confirm_order'
   end
 
-  get 'signup', to: 'users#new', as: 'signup'
-  get 'login', to: 'sessions#new', as: 'login'
-  delete 'logout', to: 'sessions#destroy', as: 'logout'
+  devise_scope :user do
+    get "signup", to: "devise/registrations#new"
+    get "login", to: "devise/sessions#new"
+    get "logout", to: "devise/sessions#destroy"
+  end
 end

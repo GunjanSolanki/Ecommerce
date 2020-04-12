@@ -1,18 +1,30 @@
+require 'google/apis/people_v1'
+require 'google/api_client/client_secrets.rb'
+
 class ApplicationController < ActionController::Base
+  People = Google::Apis::PeopleV1
+
   add_flash_types :info, :error, :warning
-  before_action :authenticated
+  before_action :authenticate_user!
 
-  def authenticated
-    if !session[:user_id] 
-      redirect_to login_path 
-    end
-  end
-
-  def current_user
-    if session[:user_id]
-      @current_user ||= User.find(session[:user_id])
-    else
-      @current_user = nil
-    end
+  def contacts
+    secrets = Google::APIClient::ClientSecrets.new(
+      {
+        "web" =>
+          {
+            "access_token" => current_user.token,
+            "refresh_token" => current_user.refresh_token,
+            "client_id" => Rails.application.secrets[:google_client_id],
+            "client_secret" => Rails.application.secrets[:google_client_secret]
+          }
+      }
+    )
+    service = People::PeopleServiceService.new
+    service.authorization = secrets.to_authorization
+    response = service.list_person_connections(
+      'people/me',
+       person_fields: ['names', 'emailAddresses', 'phoneNumbers']
+    )
+    render json: response
   end
 end
