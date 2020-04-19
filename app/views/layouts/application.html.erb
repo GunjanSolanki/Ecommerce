@@ -10,30 +10,31 @@
   </head>
 
   <body>
+    <%= render 'layouts/header' %>
     <p class="navbar-text float-right">
-      <% if user_signed_in? && current_cart %>
+      <% if user_signed_in? && current_cart && !current_user.is_admin %>
         Logged in as <strong><%= current_user.email %></strong>.
-        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %> |
-        <% if current_cart && !current_user.is_admin %>
-          Cart ID : <%= @current_cart.id %>
-        <% end %>
-        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
-        <%= link_to 'Products', products_path %>
-        <%= link_to 'Cart', shopping_carts_path %>
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+        Cart ID : <%= @current_cart.id %>
+        <%= link_to 'Products', products_path, :class => 'navbar-link' %>
+        <%= link_to 'Cart', shopping_carts_path, :class => 'navbar-link' %>
         <% unless current_user.orders.empty? %>
-          <%= link_to 'My Orders', user_orders_path(current_user.id) %>
+          <%= link_to 'My Orders', user_orders_path(current_user.id), :class => 'navbar-link' %>
         <% end %>
+      <% elsif user_signed_in? && current_user.is_admin %>
+        Logged in as <strong><%= current_user.email %></strong>.
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'navbar-link' %>
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'navbar-link'  %>
+        <%= link_to 'Products', products_path, :class => 'navbar-link' %>
+        <%= link_to 'Pending Orders', admin_pending_order_path, :class => 'navbar-link' %>
+        <%= link_to 'Order History', admin_orders_path, :class => 'navbar-link' %>
       <% else %>
         <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
         <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
       <% end %>
     </p>
 
-    <% if current_user && current_user.is_admin %>
-      <%= link_to 'Products', admin_products_path %>
-      <%= link_to 'Pending Orders', admin_pending_order_path %>
-      <%= link_to 'Order History', admin_orders_path %>
-    <% end %>
+    <p><br></br></p>
 
     <%= yield %>
   </body>

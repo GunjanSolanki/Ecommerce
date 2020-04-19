@@ -3,12 +3,12 @@
 # Many of these configuration options can be set straight in your model.
 Devise.setup do |config|
     # Add the credentials from your Google application to your secrets
-    client_id = Rails.application.credentials.development[:google][:google_client_id]
-    client_secret = Rails.application.credentials.development[:google][:google_client_secret]
-    # Configure Google omniauth with proper scope
-    config.omniauth :google_oauth2, client_id, client_secret, {
-      scope: "contacts.readonly,userinfo.profile"
-    }
+    # client_id = Rails.application.credentials.development[:google][:google_client_id]
+    # client_secret = Rails.application.credentials.development[:google][:google_client_secret]
+    # # Configure Google omniauth with proper scope
+    # config.omniauth :google_oauth2, client_id, client_secret, {
+    #   scope: "contacts.readonly,userinfo.profile"
+    # }
   # The secret key used by Devise. Devise uses this key to generate
   # random tokens. Changing this key will render invalid all existing
   # confirmation, reset password and unlock tokens in the database.
